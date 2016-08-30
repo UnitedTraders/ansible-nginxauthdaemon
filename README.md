@@ -1,4 +1,4 @@
-Role Name
+ansible-nginxauthdaemon
 =========
 
 Role for installing Python daemon for authentificaton (<https://pypi.python.org/pypi/nginxauthdaemon>)
@@ -35,8 +35,8 @@ Crowd authenticator has additional options:
 Example Playbook
 ----------------
 ```
-- hosts: prometeus
-  name: prometeus
+- hosts: prometheus
+  name: prometheus
   roles:
     - role: unitedtraders.nginxauthdaemon
 ```
