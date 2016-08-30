@@ -1,6 +1,6 @@
 ---
 # defaults file for unitedtraders.nginxauthdaemon
-nginxauth_version: '1.0.0a2'
+nginxauth_version: '1.0.0a3'
 nginxauth_user: 'nginxauth'
 nginxauth_home: '/opt/nginxauth'
 nginxauth_listen_ip: '127.0.0.1:5000'
@@ -12,4 +12,3 @@ nginxauth_session_salt: '3LGFrKBEgEu4KRS40zrqw9JoyYxMKexKUQfYRf2iAb0='
 nginxauth_des_iv: '\x04\xbdB.\xea?\xab\xdb'
 nginxauth_des_key: '\xad\x9d\x9b\xf9\xe7\xb2F\x1a'
 nginxauth_authentificator: 'nginxauthdaemon.crowdauth.CrowdAuthenticator'
-nginxauth_wheel: 'https://pypi.python.org/packages/c8/ec/46075cf3b01f434b9e363351b6f861586eb60e467587a2e1b028f792b878/nginxauthdaemon-1.0.0a2-py2.py3-none-any.whl'

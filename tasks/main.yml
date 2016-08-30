@@ -37,7 +37,7 @@
     - wheel
 
 - name: Install nginxauthdaemon
-  pip: name={{ nginxauth_wheel }} executable={{nginxauth_home}}/env/bin/pip
+  pip: name=nginxauthdaemon version={{ nginxauth_version }} executable={{nginxauth_home}}/env/bin/pip
   become_user: "{{ nginxauth_user }}"
 
 - name: copy nginxauth config
