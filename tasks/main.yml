@@ -1,0 +1,52 @@
+---
+# tasks file for unitedtraders.nginxauthdaemon
+- name: Ensure nginxauth user exists
+  user: name={{ nginxauth_user }}
+
+- name: Ensure nginxauthdaemon directories exists
+  file: state=directory path={{ nginxauth_home }} owner={{ nginxauth_user }} recurse=true
+
+# Try to create virtualenv only if it doesn't exist.
+# This way we can re-run the playbook without errors.
+- name: Check existince of nginxauthdaemon virtualenv
+  stat: path={{ nginxauth_home }}/env
+  register: nginxauth_has_virtualenv
+  become_user: "{{ nginxauth_user }}"
+
+- name: Install virtualenv
+  yum: name={{ item }} 
+  with_items: 
+     - python-virtualenv
+     - libxml2-devel
+     - libxml2
+     - libxslt-devel
+     - libxslt
+     - gcc
+     - gcc-c++
+
+- name: Create virtualenv for nginxauthdaemon
+  when: nginxauth_has_virtualenv.stat.exists == False
+  shell: virtualenv {{ nginxauth_home }}/env
+  become_user: "{{ nginxauth_user }}"
+
+- name: Install gunicorn and wheel
+  pip: name={{ item }} executable={{nginxauth_home}}/env/bin/pip
+  become_user: "{{ nginxauth_user }}"
+  with_items: 
+    - gunicorn
+    - wheel
+
+- name: Install nginxauthdaemon
+  pip: name={{ nginxauth_wheel }} executable={{nginxauth_home}}/env/bin/pip
+  become_user: "{{ nginxauth_user }}"
+
+- name: copy nginxauth config
+  template: src="example.cfg.j2" dest="{{ nginxauth_home }}/example.cfg"
+  notify: restart nginxauth
+
+- name: copy systemd unit
+  template: src="nginxauth.service.j2" dest="/etc/systemd/system/nginxauth.service"
+  notify: reload systemd units
+
+- name: start the service
+  service: name=nginxauth enabled=yes state=started

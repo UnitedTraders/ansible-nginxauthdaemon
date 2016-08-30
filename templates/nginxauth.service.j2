@@ -1,0 +1,16 @@
+[Unit]
+Description=Authentication daemon for nginx-proxied or nginx-served applications
+After=network.target
+
+[Service]
+WorkingDirectory={{ nginxauth_home }}
+Environment=DAEMON_SETTINGS={{ nginxauth_home }}/example.cfg
+PIDFile={{ nginxauth_home }}/nginxauth-pid
+User={{ nginxauth_user }}
+ExecStart={{ nginxauth_home }}/env/bin/gunicorn -b  {{ nginxauth_listen_ip }} --pid {{ nginxauth_home }}/nginxauth-pid nginxauthdaemon:app
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

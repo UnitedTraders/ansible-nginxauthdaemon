@@ -1,0 +1,8 @@
+---
+# handlers file for unitedtraders.nginxauthdaemon
+- name: restart nginxauth
+  service: name=nginxauth state=restarted
+
+- name: reload systemd units
+  command: systemctl daemon-reload
+  notify: restart nginxauth
