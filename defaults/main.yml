@@ -3,6 +3,7 @@
 nginxauth_version: '1.0.0a3'
 nginxauth_user: 'nginxauth'
 nginxauth_home: '/opt/nginxauth'
+nginxauth_service: 'nginxauth'
 nginxauth_listen_ip: '127.0.0.1:5000'
 nginxauth_realm: 'Example'
 nginxauth_crowd_url: 'http://localhost:8095/crowd/'
