@@ -15,7 +15,7 @@ galaxy_info:
     versions:
     - 23
 
-  galaxy_tags: 
+  galaxy_tags:
   - crowd
   - authorization
 

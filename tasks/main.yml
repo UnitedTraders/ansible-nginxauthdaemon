@@ -11,11 +11,12 @@
 - name: Check existince of nginxauthdaemon virtualenv
   stat: path={{ nginxauth_home }}/env
   register: nginxauth_has_virtualenv
+  become: true
   become_user: "{{ nginxauth_user }}"
 
 - name: Install virtualenv
-  yum: name={{ item }} 
-  with_items: 
+  yum: name={{ item }}
+  with_items:
      - python-virtualenv
      - libxml2-devel
      - libxml2
@@ -26,18 +27,21 @@
 
 - name: Create virtualenv for nginxauthdaemon
   when: nginxauth_has_virtualenv.stat.exists == False
-  shell: virtualenv {{ nginxauth_home }}/env
+  command: virtualenv {{ nginxauth_home }}/env
+  become: true
   become_user: "{{ nginxauth_user }}"
 
 - name: Install gunicorn and wheel
   pip: name={{ item }} executable={{nginxauth_home}}/env/bin/pip
+  become: true
   become_user: "{{ nginxauth_user }}"
-  with_items: 
+  with_items:
     - gunicorn
     - wheel
 
 - name: Install nginxauthdaemon
   pip: name=nginxauthdaemon version={{ nginxauth_version }} executable={{nginxauth_home}}/env/bin/pip
+  become: true
   become_user: "{{ nginxauth_user }}"
 
 - name: copy nginxauth config
