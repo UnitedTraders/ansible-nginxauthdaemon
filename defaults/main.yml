@@ -1,6 +1,6 @@
 ---
 # defaults file for unitedtraders.nginxauthdaemon
-nginxauth_version: '1.0.0a3'
+nginxauth_version: '1.0.0'
 nginxauth_user: 'nginxauth'
 nginxauth_home: '/opt/nginxauth'
 nginxauth_service: 'nginxauth'
