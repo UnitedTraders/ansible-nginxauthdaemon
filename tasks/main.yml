@@ -46,7 +46,7 @@
 
 - name: copy nginxauth config
   template: src="example.cfg.j2" dest="{{ nginxauth_home }}/example.cfg"
-  notify: "restart {{ nginxauth_service }}"
+  notify: "restart nginxauth"
 
 - name: copy systemd unit
   template: src="nginxauth.service.j2" dest="/etc/systemd/system/{{ nginxauth_service }}.service"
