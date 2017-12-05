@@ -38,11 +38,13 @@
   with_items:
     - gunicorn
     - wheel
+  notify: "restart nginxauth"
 
 - name: Install nginxauthdaemon
   pip: name=nginxauthdaemon version={{ nginxauth_version }} executable={{nginxauth_home}}/env/bin/pip
   become: true
   become_user: "{{ nginxauth_user }}"
+  notify: "restart nginxauth"
 
 - name: copy nginxauth config
   template: src="example.cfg.j2" dest="{{ nginxauth_home }}/example.cfg"
