@@ -6,6 +6,9 @@
 - name: Ensure nginxauthdaemon directories exists
   file: state=directory path={{ nginxauth_home }} owner={{ nginxauth_user }} recurse=true
 
+- name: Ensure nginxauthdaemon logs directories exists
+  file: state=directory path=/var/log/nginxauthdaemon owner={{ nginxauth_user }} recurse=true
+
 # Try to create virtualenv only if it doesn't exist.
 # This way we can re-run the playbook without errors.
 - name: Check existince of nginxauthdaemon virtualenv
@@ -56,3 +59,7 @@
 
 - name: start the service
   service: name={{ nginxauth_service }} enabled=yes state=started
+
+- name: Run crowd-fail2ban role
+  include_role:
+    name: crowd-fail2ban
